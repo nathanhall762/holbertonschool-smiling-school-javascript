@@ -15,7 +15,7 @@ $(document).ready(function() {
 			data.forEach(function createCard(quote, index) {
 				console.log(quote);
 				const item = $('<div>').addClass('carousel-item px-5');
-				const helper = $('<div>').addClass('d-flex flex-column align-items-center flex-sm-row col-sm-10 carousel-helper mx-5');
+				const helper = $('<div>').addClass('d-flex flex-column align-items-center flex-sm-row col-sm-10 carousel-helper m-md-5');
 				const avatar = $('<img>').addClass('rounded-circle carousel-avatar').attr('src', quote['pic_url']).attr('width', '210px');
 				console.log(quote['pic_url'])
 				const content = $('<div>').addClass('px-sm-5');
