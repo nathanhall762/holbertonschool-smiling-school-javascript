@@ -70,8 +70,28 @@
 	color: black;
 }
 
-.rightArrowVideo:before {
-	content: '\e902';
+.rightArrowVideo {
+	background-image: url('images/arrow_black_right.png');
 	font-size: 8rem;
 	color: black;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    display: inline-block;
+    width: 29px;
+    height: 62px;
+    background: no-repeat 50%/100% 100%
+}
+.carousel-control-prev-icon.white {
+    background-image: url("./images/arrow_white_left.png");
+}
+.carousel-control-next-icon.white {
+    background-image: url("./images/arrow_white_right.png");
+}
+.carousel-control-prev-icon.black {
+    background-image: url("./images/arrow_black_left.png");
+}
+.carousel-control-next-icon.black {
+    background-image: url("/images/arrow_black_right.png");
 }
