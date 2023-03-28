@@ -122,7 +122,7 @@
 			<div class="container-lg quotes">
 				<div class="loader text-center">Loading...</div>
 				<div id="carouselExampleIndicators" class="carousel slide d-none" data-ride="carousel">
-					<div class="carousel-inner">
+					<div class="carousel-inner" id="testimonial">
 					</div>
 
 					<a class="carousel-control-prev mb-5 mb-sm-0" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -148,7 +148,7 @@
 					console.log(data); // (2) [{...}, {...}]
 					const quotes = data[0];
 					console.log(`Quotes: ${quotes}`); // Quotes: [object Object]
-					const carousel = $('.carousel-inner');
+					const carousel = $('#testimonial');
 					console.log(`Carousel: ${carousel}`); // Quotes: [object Object]
 
 					// loop through each quote and create a carousel item
