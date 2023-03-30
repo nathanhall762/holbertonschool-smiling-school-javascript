@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 		// handle success response
 		success: function loadContent(data) {
-			const popularTutorialsSection = document.querySelector('.popular-tutorials');
+			const popularTutorialsSection = $('#popularTutorials');
 	
 			// Remove any existing content
 			popularTutorialsSection.innerHTML = '';
@@ -63,41 +63,37 @@ document.addEventListener('DOMContentLoaded', function() {
 			// Add each tutorial card to the section
 			data.forEach((tutorial) => {
 				console.log(tutorial);
-				const tutorialCard = `
-				<div id="tutorial-${tutorial.id}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
-				<div class="card border-0">
-				<img class="card-img-overlay w-50 ml-5 mt-3" src="${tutorial.thumb_url}">
-				<img class="card-img-overlay mx-auto mt-4 play" src="images/play.png">
-				<div class="card-body">
-					<h5>${tutorial.title}</h5>
-					<p class="card-text text-secondary">${tutorial['sub-title']}</p>
-					<div class="row">
-						<img class="rounded-circle ml-3" src="${tutorial.author_pic_url}" alt="Author image" height="25px>
-						<p class="ml-3 purple">${tutorial.author}</p>
-					</div>
-					<div class="row align-items-center justify-content-between px-4">
+				$('#popular-tutorials-section').append(
+					`<div id="tutorial-${tutorial.id}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+					<div class="card border-0">
+					<img class="card-img-overlay w-50 ml-5 mt-3" src="${tutorial.thumb_url}">
+					<img class="card-img-overlay mx-auto mt-4 play" src="images/play.png">
+					<div class="card-body">
+						<h5>${tutorial.title}</h5>
+						<p>${tutorial['sub-title']}</p>
 						<div class="row">
-							<img src="images/star_on.png" height="15px">
-							<img src="images/star_on.png" height="15px">
-							<img src="images/star_on.png" height="15px">
-							<img src="images/star_on.png" height="15px">
-							<img src="images/star_off.png" height="15px">
+							<img class="mx-3 rounded-circle" src="${tutorial.author_pic_url}" alt="Author image" height="25px>
+							<h6 class="purple">${tutorial.author}</h6>
 						</div>
-						<p class="purple ml-3 pt-3">${tutorial.duration}</p>
+						<div class="row mx-0">
+							<div class="row">
+								<img src="images/star_on.png" height="15px">
+								<img src="images/star_on.png" height="15px">
+								<img src="images/star_on.png" height="15px">
+								<img src="images/star_on.png" height="15px">
+								<img src="images/star_off.png" height="15px">
+							</div>
+							<p class="purple ml-auto">${tutorial.duration}</p>
+						</div>
 					</div>
-				</div>
-				</div>
-				`;
-				console.log(tutorialCard);
+					</div>
+					`
+				);
 				const popularTutorialsSection = document.querySelector('#popular-tutorials-section');
-				console.log(popularTutorialsSection);
-				popularTutorialsSection.insertAdjacentHTML('beforeend', tutorialCard);
 
-				console.log(popularTutorialsSection);
-	
 				// Initialize the carousel
 				$('#popular-tutorials-section').slick({
-					slidesToShow: 3,
+					// slidesToShow: 3,
 					// other options
 				});
 	
