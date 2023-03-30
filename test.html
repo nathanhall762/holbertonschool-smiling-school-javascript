@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Coiny&display=swap" rel="stylesheet">
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+	<script src="scripts.js"></script>
+	<title>Smile School</title>
+</head>
+
+
+<div class="card col-md-3">
+	<div class="card-img-top" style="background-image: url('${tutorial.thumb_url}')"></div>
+	<div class="card-body">
+		<div class="card-title">${tutorial.title}</div>
+		<div class="card-text">${tutorial['sub-title']}</div>
+		<div class="card-footer">
+		<div class="row">
+			<div class="col-3">
+			<img class="rounded-circle" src="${tutorial.author_pic_url}" alt="Author image">
+			</div>
+			<div class="col-9">
+			<span class="author">${tutorial.author}</span>
+			<div class="float-right">
+				<span class="length">${tutorial.duration}</span>
+			</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+<div class="carousel-container" style="overflow: hidden;">
+	<div class="carousel-items" style="display: flex; flex-wrap: nowrap; width: 600px;">
+		<div class="carousel-item" style="width: 100px;">Item 1</div>
+		<div class="carousel-item" style="width: 100px;">Item 2</div>
+		<div class="carousel-item" style="width: 100px;">Item 3</div>
+		<div class="carousel-item" style="width: 100px;">Item 4</div>
+		<div class="carousel-item" style="width: 100px;">Item 5</div>
+	</div>
+	<button class="prev-btn">Prev</button>
+	<button class="next-btn">Next</button>
+</div>
+
+</html>
