@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-	// fetch quotes from API
+	// testimonials
 	$.ajax({
 		url: 'https://smileschool-api.hbtn.info/quotes',
 		method: 'GET',
@@ -46,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			console.log('Error fetching quotes');
 		}
 	});
+
+	// popular videos
 	$.ajax({
 		url: "https://smileschool-api.hbtn.info/popular-tutorials",
 		type: "GET",
@@ -55,55 +57,36 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 		// handle success response
 		success: function loadContent(data) {
-			const popularTutorialsSection = $('#popularTutorials');
 	
 			// Remove any existing content
-			popularTutorialsSection.innerHTML = '';
 	
 			// Add each tutorial card to the section
 			data.forEach((tutorial) => {
 				console.log(tutorial);
 				$('#popular-tutorials-section').append(
-					`<div id="tutorial-${tutorial.id}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+					`<div id="tutorial-${tutorial.id}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 px-" data-slide-to="${tutorial.id}">
 					<div class="card border-0">
-					<img class="card-img-overlay w-50 ml-5 mt-3" src="${tutorial.thumb_url}">
-					<img class="card-img-overlay mx-auto mt-4 play" src="images/play.png">
-					<div class="card-body">
-						<h5>${tutorial.title}</h5>
-						<p>${tutorial['sub-title']}</p>
-						<div class="row">
-							<img class="mx-3 rounded-circle" src="${tutorial.author_pic_url}" alt="Author image" height="25px>
-							<h6 class="purple">${tutorial.author}</h6>
-						</div>
-						<div class="row mx-0">
-							<div class="row">
+						<img class="bg-img card-img-top img-fluid" src="${tutorial.thumb_url}">
+						<img class="card-img-overlay w-50 mx-auto mt-2" src="images/play.png">
+						<div class="card-body px-0">
+							<h5>${tutorial.title}</h5>
+							<p>${tutorial['sub-title']}</p>
+							<div class="d-flex row" style="flex-wrap: nowrap;">
+								<img class="mx-3 rounded-circle" src="${tutorial.author_pic_url}" alt="Author image" height="25px">
+								<h6 class="purple">${tutorial.author}</h6>
+							</div>
+							<div class="d-flex row mx-auto">
 								<img src="images/star_on.png" height="15px">
 								<img src="images/star_on.png" height="15px">
 								<img src="images/star_on.png" height="15px">
 								<img src="images/star_on.png" height="15px">
 								<img src="images/star_off.png" height="15px">
+								<p class="purple col ml-auto">${tutorial.duration}</p>
 							</div>
-							<p class="purple ml-auto">${tutorial.duration}</p>
 						</div>
-					</div>
 					</div>
 					`
 				);
-				const popularTutorialsSection = document.querySelector('#popular-tutorials-section');
-
-				// Initialize the carousel
-				$('#popular-tutorials-section').slick({
-					// slidesToShow: 3,
-					// other options
-				});
-	
-				// make first slide active
-				$('#tutorial-1').addClass('active');
-		
-				// remove loader
-				$('.loader').hide();
-				// show carousel
-				$('.popular-tutorials').show();
 			});
 	
 		},
@@ -111,7 +94,78 @@ document.addEventListener('DOMContentLoaded', function() {
 			// handle error response
 		},
 		complete: function () {
-			// hide loader
+			// make first slide active and disable automatic sliding
+			$('#tutorial-1').addClass('active');
+			$('#carousel-popular').attr('data-interval', false);
+
+			// modify number of slides that are displayed at a time
+			$('#carousel-popular').attr('data-ride', 'carousel').find('.carousel-item').removeClass('col-12 col-sm-6 col-md-4 col-lg-3').addClass('col-12 col-md-6 col-lg-4');
+
+		
+			// remove loader
+			$('#tutorialLoader').remove();
+			$('#carousel-popular-controls').removeClass('d-none');
 		}
 	});
-}	)
+
+	// latest videos
+	$.ajax({
+		url: "https://smileschool-api.hbtn.info/latest-videos",
+		type: "GET",
+		dataType: "json",
+		beforeSend: function () {
+			// show loader
+		},
+		// handle success response
+		success: function loadContent(data) {
+	
+			// Remove any existing content
+	
+			// Add each tutorial card to the section
+			data.forEach((video) => {
+				console.log(video);
+				$('#latest-tutorials-section').append(
+					`<div id="video-${video.id}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 px-" data-slide-to="${video.id}">
+					<div class="card border-0">
+						<img class="bg-img card-img-top img-fluid" src="${video.thumb_url}">
+						<img class="card-img-overlay w-50 mx-auto mt-2" src="images/play.png">
+						<div class="card-body px-0">
+							<h5>${video.title}</h5>
+							<p>${video['sub-title']}</p>
+							<div class="d-flex row" style="flex-wrap: nowrap;">
+								<img class="mx-3 rounded-circle" src="${video.author_pic_url}" alt="Author image" height="25px">
+								<h6 class="purple">${video.author}</h6>
+							</div>
+							<div class="d-flex row mx-auto">
+								<img src="images/star_on.png" height="15px">
+								<img src="images/star_on.png" height="15px">
+								<img src="images/star_on.png" height="15px">
+								<img src="images/star_on.png" height="15px">
+								<img src="images/star_off.png" height="15px">
+								<p class="purple col ml-auto">${video.duration}</p>
+							</div>
+						</div>
+					</div>
+					`
+				);
+			});
+	
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			// handle error response
+		},
+		complete: function () {
+			// make first slide active and disable automatic sliding
+			$('#video-1').addClass('active');
+			$('#carousel-latest').attr('data-interval', false);
+
+			// modify number of slides that are displayed at a time
+			$('#carousel-latest').attr('data-ride', 'carousel').find('.carousel-item').removeClass('col-12 col-sm-6 col-md-4 col-lg-3').addClass('col-12 col-md-6 col-lg-4');
+
+		
+			// remove loader
+			$('#latestLoader').remove();
+			$('#carousel-latest-controls').removeClass('d-none');
+		}
+	});
+})
