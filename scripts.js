@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 	// testimonials
 	$.ajax({
 		url: 'https://smileschool-api.hbtn.info/quotes',
@@ -57,12 +57,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 		// handle success response
 		success: function loadContent(data) {
-	
+
 			// Remove any existing content
-	
+
 			// Add each tutorial card to the section
 			data.forEach((tutorial) => {
-				console.log(tutorial);
+				// console.log(tutorial);
 				$('#popular-tutorials-section').append(
 					`<div id="tutorial-${tutorial.id}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 px-" data-slide-to="${tutorial.id}">
 					<div class="card border-0">
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					`
 				);
 			});
-	
+
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			// handle error response
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			// modify number of slides that are displayed at a time
 			$('#carousel-popular').attr('data-ride', 'carousel').find('.carousel-item').removeClass('col-12 col-sm-6 col-md-4 col-lg-3').addClass('col-12 col-md-6 col-lg-4');
 
-		
+
 			// remove loader
 			$('#tutorialLoader').remove();
 			$('#carousel-popular-controls').removeClass('d-none');
@@ -118,12 +118,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 		// handle success response
 		success: function loadContent(data) {
-	
+
 			// Remove any existing content
-	
+
 			// Add each tutorial card to the section
 			data.forEach((video) => {
-				console.log(video);
+				// console.log(video);
 				$('#latest-tutorials-section').append(
 					`<div id="video-${video.id}" class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 px-" data-slide-to="${video.id}">
 					<div class="card border-0">
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					`
 				);
 			});
-	
+
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			// handle error response
@@ -162,10 +162,104 @@ document.addEventListener('DOMContentLoaded', function() {
 			// modify number of slides that are displayed at a time
 			$('#carousel-latest').attr('data-ride', 'carousel').find('.carousel-item').removeClass('col-12 col-sm-6 col-md-4 col-lg-3').addClass('col-12 col-md-6 col-lg-4');
 
-		
+
 			// remove loader
 			$('#latestLoader').remove();
 			$('#carousel-latest-controls').removeClass('d-none');
 		}
 	});
+
+	// courses
+	$.ajax({
+		url: "https://smileschool-api.hbtn.info/courses",
+		type: "GET",
+		success: function (response) {
+			const topics = response.topics;
+			const sorts = response.sorts;
+			const courses = response.courses;
+
+			// loop through topics
+			topics.forEach(topic => {
+				// console.log(topic);
+				$('#topicDropDown').append(
+					`<li class="dropdown-item">
+						<a href="#" class="text-dark" style="text-decoration: none;">
+							${toStandardString(topic)}
+						</a>
+					</li>`
+				);
+			});
+
+			// loop through sorts
+			sorts.forEach(sort => {
+				// console.log(topic);
+				$('#sorts').append(
+					`<li class="dropdown-item">
+						<a href="#" class="text-dark" style="text-decoration: none;">
+							${toStandardString(sort)}
+						</a>
+					</li>`
+				);
+			});
+
+			loadVideos(courses);
+		},
+		error: function (xhr) {
+			console.log(xhr.responseText);
+		}
+	});
 })
+
+// snake to standard string
+function toStandardString(snakeCaseString) {
+	let words = snakeCaseString.split('_');
+	for (let i = 0; i < words.length; i++) {
+		words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+	}
+	return words.join(' ');
+}
+
+// star rating function
+function stars(rating) {
+	let stars = '';
+	for (let i = 1; i <= 5; i++) {
+		if (i < rating) {
+			stars += `<img src="./images/star_on.png" height="15px" width="15px">`
+		} else {
+			stars += `<img src="./images/star_off.png" height="15px" width="15px">`
+		}
+	}
+	return stars;
+}
+
+// load videos function
+function loadVideos(courses) {
+	// loop through courses
+	courses.forEach(video => {
+		// console.log(course);
+		$('#courseVideos').append(
+			`<div class="col-12 col-sm-4 col-md-3 my-3">
+				<div>
+					<img class="card-img-top" src="${video.thumb_url}" alt="">
+					<img class="card-img-overlay play mx-auto mt-1 p-0 w-50" src="images/play.png">
+				</div>
+				<div class="card-body">
+					<h1 class="card-title lead font-weight-bold text-dark">${video.title}</h1>
+					<p class="card-text text-secondary">${video['sub-title']}</p>
+					<div class="row">
+						<img class="rounded-circle ml-3" src="${video['author_pic_url']}" height="25px" width="25px"
+							alt="">
+						<p class="ml-3 purple">${video.author}</p>
+					</div>
+					<div class="row align-items-center justify-content-between px-4">
+						<div class="row">
+							${stars(video.star)}
+						</div>
+						<p class="purple ml-3 pt-3">${video.duration}</p>
+					</div>
+				</div>
+			</div>
+			`
+		)
+	});
+}

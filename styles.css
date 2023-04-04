@@ -110,3 +110,15 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Pre-pre-LD */
+.dropdown-item a:hover {
+	color: #C271FF !important;
+}
+
+#sort-by:focus,
+#sort-by:hover,
+#topic:focus,
+#topic:hover {
+	background-color: #C271FF;
+}
