@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
-	// courses
+	// courses search bar and video loading
 	$.ajax({
 		url: "https://smileschool-api.hbtn.info/courses",
 		type: "GET",
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				// console.log(topic);
 				$('#topicDropDown').append(
 					`<li class="dropdown-item">
-						<a href="#" class="text-dark" style="text-decoration: none;">
+						<a href="#" class="text-dark" style="text-decoration: none;" onclick="topicSelect(this)">
 							${toStandardString(topic)}
 						</a>
 					</li>`
@@ -195,14 +195,14 @@ document.addEventListener('DOMContentLoaded', function () {
 				// console.log(topic);
 				$('#sorts').append(
 					`<li class="dropdown-item">
-						<a href="#" class="text-dark" style="text-decoration: none;">
+						<a href="#" class="text-dark" style="text-decoration: none;" onclick="sortSelect(this)">
 							${toStandardString(sort)}
 						</a>
 					</li>`
 				);
 			});
 
-			loadVideos(courses);
+			loadVideos(sortBy(courses));
 		},
 		error: function (xhr) {
 			console.log(xhr.responseText);
@@ -262,4 +262,22 @@ function loadVideos(courses) {
 			`
 		)
 	});
+}
+
+function topicSelect(topic, courses=[]) {
+	$('#topic').text(topic.textContent);
+};
+
+function sortSelect(sort) {
+	$('#sort-by').text(sort.textContent);
+};
+
+function sortBy(courses) {
+	// determine which sort method is selected
+	// sort courses array by views or by release or by rating
+	// return courses
+	if ($('#sort-by').text == 'Most Popular') {
+		console.log('Most Popular');
+		console.log(courses.sort((a, b) => a.views - b.views));
+	}
 }
