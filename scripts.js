@@ -169,14 +169,13 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 
-	// courses search bar and video loading
+	// courses ajax and load dropdown
 	$.ajax({
 		url: "https://smileschool-api.hbtn.info/courses",
 		type: "GET",
 		success: function (response) {
 			const topics = response.topics;
 			const sorts = response.sorts;
-			const courses = response.courses;
 
 			// loop through topics
 			topics.forEach(topic => {
@@ -201,14 +200,41 @@ document.addEventListener('DOMContentLoaded', function () {
 					</li>`
 				);
 			});
+	}})
 
-			loadVideos(sortBy(courses));
+	//initial get course call
+	getCourses();
+
+	//add event listener to search bar
+	$('#search').change(function() {
+		getCourses();
+	})
+})
+
+// courses search bar and video loading
+function getCourses(){
+	$('#courseVideos').empty();
+	$('#courseVideos').append(`<div class="loader" id="tutorialLoader"></div>`);
+	$.ajax({
+		url: "https://smileschool-api.hbtn.info/courses",
+		type: "GET",
+		data: {
+			q: $('#search').val(),
+			// topic: $('#topic').text(),
+			// sort: $('#sort-by').val()
+		},
+		success: function (response) {
+			const courses = response.courses;
+
+			console.log(courses);
+			$('#tutorialLoader').remove();
+			loadVideos(courses);
 		},
 		error: function (xhr) {
 			console.log(xhr.responseText);
 		}
 	});
-})
+}
 
 // snake to standard string
 function toStandardString(snakeCaseString) {
@@ -264,12 +290,14 @@ function loadVideos(courses) {
 	});
 }
 
-function topicSelect(topic, courses=[]) {
+function topicSelect(topic) {
 	$('#topic').text(topic.textContent);
+	getCourses();
 };
 
 function sortSelect(sort) {
 	$('#sort-by').text(sort.textContent);
+	getCourses();
 };
 
 function sortBy(courses) {
