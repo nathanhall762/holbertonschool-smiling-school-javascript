@@ -260,6 +260,9 @@ function stars(rating) {
 
 // load videos function
 function loadVideos(courses) {
+	$('#courseVideos').append(
+		`<p class="col-12 mt-3 mb-0" style="color: gray">${courses.length} Videos</p>`
+	);
 	// loop through courses
 	courses.forEach(video => {
 		// console.log(course);
